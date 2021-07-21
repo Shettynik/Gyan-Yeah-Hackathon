@@ -26,18 +26,18 @@ const UploadStorage = multer({
     storage: storage,
     fileFilter: function (req, file, callback) {
 		if (file) {
-			var ext = path.extname(file.originalname).toLowerCase();
-			if (
-				ext !== '.mp4' &&
-				ext !== '.webm' &&
-				ext !== '.mpeg' &&
-                ext !== '.m4p' &&
-                ext !== '.mpe'
-			) {
-				return callback(
-					'Only videos are allowed, Given file extension '
-				);
-			}
+			// var ext = path.extname(file.originalname).toLowerCase();
+			// if (
+			// 	ext !== '.mp4' &&
+			// 	ext !== '.webm' &&
+			// 	ext !== '.mpeg' &&
+            //     ext !== '.m4p' &&
+            //     ext !== '.mpe'
+			// ) {
+			// 	return callback(
+			// 		'Only videos are allowed, Given file extension '
+			// 	);
+			// }
 			callback(null, true);
 		} else {
 			return callback('No video provided');

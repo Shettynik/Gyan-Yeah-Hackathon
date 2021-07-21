@@ -62,7 +62,7 @@ const TeacherProfile = ({ history, match }) => {
             <div className="teacher__profile">
                 {firstname==="" && lastname ==="" ? <Container style={{textAlign:"center", marginTop:"10%"}}>
                     <CircularProgress />
-                </Container> : <Profile firstname={firstname} lastname={lastname} subjects={subjects} /> }
+                </Container> : <Profile firstname={firstname} lastname={lastname} subjects={subjects} id={match.params.id} /> }
             </div>
         </>
     )

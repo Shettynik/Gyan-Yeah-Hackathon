@@ -43,15 +43,25 @@ const uploadVideo = async (req, res) => {
             if(err){
                 console.log(err.message)
             }
-            console.log(req)
+            console.log(req.file.location)
+            res.status(200).json(req.file.location)
         } catch (error) {
             console.log(error.message)
         }
     })
 }
+
+const deleteSubjectById = async (req, res) => {
+    try {
+        
+    } catch (error) {
+        console.log(error.message)
+    }
+}
  
 module.exports = {
     getTeacherInfo,
     addSubject,
-    uploadVideo
+    uploadVideo,
+    deleteSubjectById
 }

@@ -5,11 +5,13 @@ import axios from 'axios';
 import { TextField } from '@material-ui/core';
 import { Container, Button, Alert } from 'react-bootstrap';
 import { Link, Redirect } from 'react-router-dom';
+import Dropzone from 'react-dropzone';
 
 const AddSubject = ({ match, history }) => {
     const [subjectName, setsubjectName] = useState("");
     const [description, setdescription] = useState("");
-    const [video, setvideo] = useState("");
+    const [file, setFile] = useState({});
+    const [video, setVideo] = useState("");
 
     useEffect(() => {
         axios.get("http://localhost:5000/auth/getLoggedIn").then((data) => {
@@ -22,17 +24,32 @@ const AddSubject = ({ match, history }) => {
         })
     });
 
-    const addSubjectHandler = async (e) => {
-        e.preventDefault();
-        axios.post(`http://localhost:5000/teacher/addSubject/60f65c0babc9d32384ef166d`, {subjectName, description, video})
+    const uploadVideo = async (e) => {
+        e.preventDefault()
+        console.log("ondrop", file)
+        const form = new FormData();
+        form.append("video",file);
+        await console.log(form)
+        axios.post(`http://localhost:5000/teacher/uploadVideo/${match.params.id}`, form)
         .then((data) => {
-            setsubjectName("")
-            setdescription("")
-            setvideo("")
-            history.push(`/teacher/profile/${match.params.id}`)
-        }).catch((error) => {
+            console.log(data.data);
+            setVideo(data.data);
+        })
+        .catch((error) => {
             console.log(error.message)
         })
+    }
+
+    const addSubjectHandler = async (e) => {
+        e.preventDefault();
+        axios.post(`http://localhost:5000/teacher/addSubject/${match.params.id}`, { subjectName, description, video })
+            .then((data) => {
+                setsubjectName("")
+                setdescription("")
+                history.push(`/teacher/profile/${match.params.id}`)
+            }).catch((error) => {
+                console.log(error.message)
+            })
     }
     return (
         <>
@@ -51,11 +68,14 @@ const AddSubject = ({ match, history }) => {
                                 multiline
                                 value={description} onChange={(e) => { setdescription(e.target.value) }} />
                         </div>
-                        <div className="login__form__group">
-                            <TextField id="standard-basic" label="Video Link" type="text" value={video} onChange={(e) => { setvideo(e.target.value) }} required />
-                        </div>
                         <Button type="submit" variant="warning" color="primary">Add</Button>
                     </form>
+                    <div className="login__form__group">
+                        <form onSubmit={uploadVideo}>
+                            <input type="file" name="video" onChange={(e) => { setFile(e.target.files[0]) }} />
+                            <button>Upload</button>
+                        </form>
+                    </div>
                 </Container>
             </Container>
         </>

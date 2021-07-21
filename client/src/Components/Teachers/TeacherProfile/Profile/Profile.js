@@ -8,7 +8,10 @@ import axios from 'axios';
 import CircularProgress from '@material-ui/core/CircularProgress';
 import "../TeacherProfile.css";
 
-const Profile = ({firstname, lastname, subjects}) => {
+const Profile = ({firstname, lastname, subjects,id}) => {
+    const deleteSubject = async (subjectId) => {
+        axios.delete(`http://localhost:5000/teacher/deleteSubject/${id}/${subjectId}`).then().catch()
+    }
     return (
         <>
         <Container className="teacher__profile__container">
