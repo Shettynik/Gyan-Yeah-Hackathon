@@ -1,0 +1,41 @@
+
+.login__main__container{
+    display: flex;
+    justify-content: space-between;
+    margin-top: 100px;
+}
+
+.login__sub__container{
+    max-width: 500px;
+    height: 300px;
+    text-align: center;
+    border: 2px solid #FFD523;
+    box-shadow: 0px 1px 9px 6px darkgrey;
+}
+
+.login__header{
+    font-size: 1.5rem;
+    text-align: center;
+    padding-bottom: 10px;
+    margin-top: 10px;
+}
+
+.login__form__group{
+    margin-bottom: 20px;
+}
+
+.login__form__register__link{
+    text-align: left;
+    margin-top: 30px;
+}
+
+@media (max-width: 1220px) {
+    .login__main__container {
+        display: flex;
+        flex-direction: column;
+        align-items: space-between;
+        margin-top: 50px;
+        height: 650px;
+        justify-content: space-between;
+    }
+}
