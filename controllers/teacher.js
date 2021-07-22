@@ -52,7 +52,19 @@ const uploadVideo = async (req, res) => {
 }
 
 const deleteSubjectById = async (req, res) => {
+    const {id, subjectId} = req.params;
     try {
+        const deleteSubject =  await Subject.findByIdAndDelete(subjectId, (err, data) => {
+            if(!err){
+                console.log(data)
+            }
+        });
+
+        const getTeacher = await Teacher.findById(id);
+        await getTeacher.subjectsCreated.pull({"_id" : subjectId});
+        await getTeacher.save()
+
+        res.send("deleted")
         
     } catch (error) {
         console.log(error.message)
