@@ -36,25 +36,25 @@ const Register = ({history, match}) => {
         })
     }
 
-    useEffect(() => {
-        axios.get("http://localhost:5000/auth/getLoggedIn").then((data) => {
-            if (data.data.userType==="Teacher") {
-                history.push(`/teacher/profile/${data.data.user}`)
-            }else if(data.data.userType==="Student"){
-                history.push(`/student/profile/${data.data.user}`)
-            }
-        }).catch((error) => {
-            console.log(error.message)
-        })
-    })
+    // useEffect(() => {
+    //     axios.get("http://localhost:5000/auth/getLoggedIn").then((data) => {
+    //         if (data.data.userType==="Teacher") {
+    //             history.push(`/teacher/profile`)
+    //         }else if(data.data.userType==="Student"){
+    //             history.push(`/student/profile`)
+    //         }
+    //     }).catch((error) => {
+    //         console.log(error.message)
+    //     })
+    // })
 
     return (
         <>
-            <Navbar style={{ backgroundColor: "#FFD523" }}>
+            {/* <Navbar style={{ backgroundColor: "#FFD523" }}>
                 <Container>
                     <Navbar.Brand style={{ color: "darkblue", fontFamily: "700" }}>Gyan</Navbar.Brand>
                 </Container>
-            </Navbar>
+            </Navbar> */}
             {error && (<Alert variant="danger">
                 {error}
             </Alert>)}

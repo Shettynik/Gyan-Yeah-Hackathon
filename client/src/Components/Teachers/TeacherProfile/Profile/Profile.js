@@ -3,15 +3,13 @@ import { Container, Navbar, Button, Nav } from 'react-bootstrap';
 import IconButton from '@material-ui/core/IconButton';
 import PhotoCamera from '@material-ui/icons/PhotoCamera';
 import { Link } from 'react-router-dom';
-import AccountCircleIcon from '@material-ui/icons/AccountCircle';
 import axios from 'axios';
-import CircularProgress from '@material-ui/core/CircularProgress';
 import "../TeacherProfile.css";
 
-const Profile = ({ firstname, lastname, subjects, id }) => {
+const Profile = ({ firstname, lastname, subjects }) => {
     const deleteSubject = async (subjectId) => {
         console.log(subjectId)
-        axios.delete(`http://localhost:5000/teacher/deleteSubject/${id}/${subjectId}`).then(() => {
+        axios.delete(`http://localhost:5000/teacher/deleteSubject/${subjectId}`).then(() => {
             console.log("subject deleted")
         }).catch((error) => {
             console.log(error.message)
@@ -39,7 +37,7 @@ const Profile = ({ firstname, lastname, subjects, id }) => {
                     {subjects && subjects.map((subject) => (
                         <div className="teacher__profile__subject">
                             <video width="320" height="240" className="tab" controls>Your browser does not support the &lt;video&gt; tag.
-                                <source src="https://gyandb.s3.amazonaws.com/2021-07-21T16268673958071242623357.mp4" />
+                                <source src={subject.video} />
                             </video>
                             <p className="teacher__profile__subject__name">{subject.subjectName}</p>
                             <p className="teacher__profile__subject__name">{subject.description}</p>

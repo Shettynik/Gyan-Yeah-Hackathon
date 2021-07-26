@@ -12,48 +12,44 @@ const AddSubject = ({ match, history }) => {
     const [description, setdescription] = useState("");
     const [file, setFile] = useState({});
     const [video, setVideo] = useState("");
-
-    useEffect(() => {
-        axios.get("http://localhost:5000/auth/getLoggedIn").then((data) => {
-            console.log(data.data.user)
-            if (!data.data.user) {
-                history.push("/login")
-            }
-        }).catch((error) => {
-            console.log(error.message)
-        })
-    });
+    const [error, seterror] = useState("");
 
     const uploadVideo = async (e) => {
         e.preventDefault()
         console.log("ondrop", file)
         const form = new FormData();
         form.append("video",file);
-        await console.log(form)
-        axios.post(`http://localhost:5000/teacher/uploadVideo/${match.params.id}`, form)
+        axios.post(`http://localhost:5000/teacher/uploadVideo`, form)
         .then((data) => {
             console.log(data.data);
             setVideo(data.data);
         })
         .catch((error) => {
-            console.log(error.message)
+            seterror(error.message)
+                setTimeout(() => {
+                    seterror("")
+                },7000)
         })
     }
 
     const addSubjectHandler = async (e) => {
         e.preventDefault();
-        axios.post(`http://localhost:5000/teacher/addSubject/${match.params.id}`, { subjectName, description, video })
+        console.log(subjectName, description, video)
+        axios.post(`http://localhost:5000/teacher/addSubject`, { subjectName, description, video })
             .then((data) => {
                 setsubjectName("")
                 setdescription("")
-                history.push(`/teacher/profile/${match.params.id}`)
+                history.push(`/teacher/profile`)
             }).catch((error) => {
-                console.log(error.message)
+                seterror(error.message)
+                setTimeout(() => {
+                    seterror("")
+                },7000)
             })
     }
     return (
         <>
-            <NavigationBarTeacher id={match.params.id} history={history} />
+        {error && <Alert variant="danger">{error}</Alert>}
             <Container className="register__container">
                 <Container className="register__form__container">
                     <h2 className="register__form__header">Add Subject</h2>

@@ -17,6 +17,7 @@ const Login = ({ history, match }) => {
         axios.post("http://localhost:5000/auth/login/Student", { email: studentemail, password: studentpassword }, { withCredentials: true }, {
             'Content-Type': 'application/json',
         }).then(() => {
+            history.push('/student/profile')
             setstudentEmail("");
             setstudentPassword("");
         }).catch((error) => { 
@@ -33,6 +34,7 @@ const Login = ({ history, match }) => {
         axios.post("http://localhost:5000/auth/login/Teacher", { email: teacheremail, password: teacherpassword }, { withCredentials: true }, {
             'Content-Type': 'application/json',
         }).then(() => {
+            history.push("/teacher/profile")
             setteacherEmail("");
             setteacherPassword("");
         }).catch((error) => {
@@ -43,25 +45,8 @@ const Login = ({ history, match }) => {
             },5000)
         })
     }
-
-    useEffect(() => {
-        axios.get("http://localhost:5000/auth/getLoggedIn").then((data) => {
-            if (data.data.userType==="Teacher") {
-                history.push(`/teacher/profile/${data.data.user}`)
-            }else if(data.data.userType==="Student"){
-                history.push(`/student/profile/${data.data.user}`)
-            }
-        }).catch((error) => {
-            console.log(error.message)
-        })
-    })
     return (
         <>
-            <Navbar style={{ backgroundColor: "#FFD523" }}>
-                <Container>
-                    <Navbar.Brand>Gyan</Navbar.Brand>
-                </Container>
-            </Navbar>
             {error && (<Alert variant="danger">
                 Please Check your email id and password
             </Alert>)}

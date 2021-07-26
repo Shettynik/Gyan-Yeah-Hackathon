@@ -102,12 +102,12 @@ const getLoggedInController = async (req, res) => {
     try {
         const token = req.cookies.token;
         if(!token){
-            return res.send(false)
+            return res.send({auth: false})
         };
 
         const decoded = await jwt.verify(token, process.env.SECRET_KEY);
         console.log(decoded)
-        res.status(200).json(decoded)
+        res.status(200).json({auth: true, ...decoded})
     } catch (error) {
         res.status(500).json({
             error: error.message
