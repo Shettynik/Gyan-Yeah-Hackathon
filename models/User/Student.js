@@ -18,10 +18,6 @@ const StudentSchema = new Schema({
         type: String,
         required: true
     },
-    subjects:[{
-        type: Schema.Types.ObjectId,
-        ref:"Subject"
-    }],
     teachersFollowed:[{
         type: Schema.Types.ObjectId,
         ref:"Teacher"

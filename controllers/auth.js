@@ -7,6 +7,7 @@ const registerAuthController = async (req, res) => {
     const userType = req.params.userType;
     const {firstname, lastname, email, password} = req.body;
     try {
+        console.log(userType)
 
         // Checking Duplicate Email
         const checkEmail = userType === "Teacher" ? await Teacher.findOne({email}) : await Student.findOne({email});

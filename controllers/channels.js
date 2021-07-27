@@ -16,10 +16,12 @@ const followTeacher = async (req, res) => {
     console.log("posted")
     try {
         const findStudent = await Student.findById(studentId);
-        await findStudent.teachersFollowed.push(teacherId);
 
         const findTeacher =  await Teacher.findById(teacherId);
         await findTeacher.students.push(findStudent)
+
+        await findStudent.teachersFollowed.push(findTeacher);
+        
         await findStudent.save();
 
         await findTeacher.save();
@@ -31,7 +33,19 @@ const followTeacher = async (req, res) => {
     }
 }
 
+const followedChannels = async (req, res) => {
+    const userId = req.userId;
+    try {
+        const getFollowedTeachers = await Student.findById(userId).populate("teachersFollowed").select({"teachersFollowed": 1, "_id":0});
+        res.status(200).json(getFollowedTeachers);
+
+    } catch (error) {
+        res.status(400).json(error.message)
+    }
+}
+
 module.exports = {
     getAllChannels,
-    followTeacher
+    followTeacher,
+    followedChannels
 }

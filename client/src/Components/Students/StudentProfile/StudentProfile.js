@@ -2,8 +2,24 @@ import React, { useState, useEffect } from 'react';
 import './StudentProfile.css';
 import { Container, Navbar, Button, Nav, Form, FormControl } from 'react-bootstrap';
 import { Link } from 'react-router-dom';
+import axios from 'axios';
 
 const StudentProfile = ({ history, match }) => {
+    const [teachers, setteachers] = useState([]);
+
+    const getFollowedTeachers = () => {
+        axios.get('http://localhost:5000/channels/following')
+            .then((data) => {
+                setteachers(data.data.teachersFollowed)
+            })
+            .catch((error) => {
+                console.log(error.message)
+            })
+    }
+
+    useEffect(() => {
+        getFollowedTeachers()
+    })
 
     return (
         <>
@@ -33,7 +49,13 @@ const StudentProfile = ({ history, match }) => {
                 </Container>
             </Navbar> */}
             <Container>
-                <h6 className="student__profile__subscribe__header">You have not subcribed to any content yet!!</h6>
+                {teachers ? teachers.map((teacher) => (
+                    <Container id={teacher._id}>
+                        <p>{teacher.firstname} {teacher.lastname}</p>
+                        <Button>View</Button>
+                        <Button className="m-3">Unfollow</Button>
+                    </Container>
+                )): (<h6 className="student__profile__subscribe__header">You have not followed to any content yet!!</h6>)}
             </Container>
         </>
     )

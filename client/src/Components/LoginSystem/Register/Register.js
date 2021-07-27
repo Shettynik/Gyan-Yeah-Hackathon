@@ -11,11 +11,12 @@ const Register = ({history, match}) => {
     const [email, setemail] = useState("");
     const [password, setpassword] = useState("");
     const [error, setError] = useState("");
+    const [message, setmessage] = useState("");
 
     const registerSubmit = async (e) => {
         
         e.preventDefault()
-        axios.post(`http://localhost:5000/auth/register/Teacher${match.params.userType}`, {firstname, lastname, email, password},{ withCredentials: true },{
+        axios.post(`http://localhost:5000/auth/register/${match.params.userType}`, {firstname, lastname, email, password},{ withCredentials: true },{
             'Content-Type': 'application/json',
         }).then((data) => {
             console.log(data)
@@ -23,6 +24,7 @@ const Register = ({history, match}) => {
             setlastname("");
             setemail("");
             setpassword("");
+            setmessage("User registered successfully!")
         }).catch((error) => {
             if(password.length < 6){
                 setError("Password must contain minimum 6 character")
@@ -55,6 +57,7 @@ const Register = ({history, match}) => {
                     <Navbar.Brand style={{ color: "darkblue", fontFamily: "700" }}>Gyan</Navbar.Brand>
                 </Container>
             </Navbar> */}
+            {message && (<Alert variant="success">{message} Please <Link to="/login">Login</Link> again!</Alert>)}
             {error && (<Alert variant="danger">
                 {error}
             </Alert>)}

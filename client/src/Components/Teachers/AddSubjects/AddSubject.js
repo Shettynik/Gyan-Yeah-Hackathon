@@ -3,33 +3,40 @@ import NavigationBarTeacher from '../../Header/NavigationBarTeacher';
 import './AddSubject.css';
 import axios from 'axios';
 import { TextField } from '@material-ui/core';
-import { Container, Button, Alert } from 'react-bootstrap';
+import { Container, Button, Alert, Spinner } from 'react-bootstrap';
 import { Link, Redirect } from 'react-router-dom';
-import Dropzone from 'react-dropzone';
 
 const AddSubject = ({ match, history }) => {
     const [subjectName, setsubjectName] = useState("");
     const [description, setdescription] = useState("");
     const [file, setFile] = useState({});
     const [video, setVideo] = useState("");
+    const [loading, setloading] = useState(false);
     const [error, seterror] = useState("");
+    const [message, setmessage] = useState("");
 
     const uploadVideo = async (e) => {
-        e.preventDefault()
+        e.preventDefault();
+        setloading(true);
         console.log("ondrop", file)
         const form = new FormData();
-        form.append("video",file);
+        form.append("video", file);
         axios.post(`http://localhost:5000/teacher/uploadVideo`, form)
-        .then((data) => {
-            console.log(data.data);
-            setVideo(data.data);
-        })
-        .catch((error) => {
-            seterror(error.message)
+            .then((data) => {
+                console.log(data.data);
+                setVideo(data.data);
+                setloading(false);
+                setmessage("Video uploaded successfully !");
+                setTimeout(() => {
+                    setmessage("")
+                }, 7000)
+            })
+            .catch((error) => {
+                seterror(error.message)
                 setTimeout(() => {
                     seterror("")
-                },7000)
-        })
+                }, 7000)
+            })
     }
 
     const addSubjectHandler = async (e) => {
@@ -44,12 +51,16 @@ const AddSubject = ({ match, history }) => {
                 seterror(error.message)
                 setTimeout(() => {
                     seterror("")
-                },7000)
+                }, 7000)
             })
     }
     return (
         <>
-        {error && <Alert variant="danger">{error}</Alert>}
+            {loading && <Spinner animation="border" role="status">
+                <span className="visually-hidden">Loading...</span>
+            </Spinner>}
+            {message && <Alert variant="success">{message}</Alert>}
+            {error && <Alert variant="danger">{error}</Alert>}
             <Container className="register__container">
                 <Container className="register__form__container">
                     <h2 className="register__form__header">Add Subject</h2>
