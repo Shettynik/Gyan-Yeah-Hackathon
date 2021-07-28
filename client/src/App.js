@@ -3,19 +3,19 @@ import Login from './Components/LoginSystem/Login/Login';
 import Register from './Components/LoginSystem/Register/Register';
 import TeacherProfile from './Components/Teachers/TeacherProfile/TeacherProfile';
 import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
-import axios from 'axios';
 import AddSubject from './Components/Teachers/AddSubjects/AddSubject';
 import StudentProfile from './Components/Students/StudentProfile/StudentProfile';
 import NavigationBar from './Components/NavigationBar/NavigationBar';
 import Channels from './Components/Students/Channels/Channels';
-axios.defaults.withCredentials = true;
+import axiosInstance from './AxiosSetup';
 
 function App() {
   const [auth, setauth] = useState(false)
   const [type, settype] = useState("");
 
   useEffect(() => {
-    axios.get("http://localhost:5000/auth/getLoggedIn").then((data) => {
+
+    axiosInstance.get("/auth/getLoggedIn").then((data) => {
       setauth(data.data.auth)
       settype(data.data.userType)
       console.log(auth, type)

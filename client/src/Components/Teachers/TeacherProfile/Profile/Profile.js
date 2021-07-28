@@ -3,13 +3,13 @@ import { Container, Navbar, Button, Nav } from 'react-bootstrap';
 import IconButton from '@material-ui/core/IconButton';
 import PhotoCamera from '@material-ui/icons/PhotoCamera';
 import { Link } from 'react-router-dom';
-import axios from 'axios';
+import axiosInstance from './../../../../AxiosSetup';
 import "../TeacherProfile.css";
 
 const Profile = ({ firstname, lastname, subjects }) => {
     const deleteSubject = async (subjectId) => {
         console.log(subjectId)
-        axios.delete(`http://localhost:5000/teacher/deleteSubject/${subjectId}`).then(() => {
+        axiosInstance.delete(`/teacher/deleteSubject/${subjectId}`).then(() => {
             console.log("subject deleted")
         }).catch((error) => {
             console.log(error.message)
@@ -29,6 +29,7 @@ const Profile = ({ firstname, lastname, subjects }) => {
                 <div className="teacher__profile__header">
                     <h5 className="teacher__profile__name">{firstname} {lastname}</h5>
                     <p className="teacher__profile__bio">when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged</p>
+                    <Button variant="warning">Update</Button>
                 </div>
             </Container>
             <Container className="teacher__profile__subject__container">
@@ -42,7 +43,9 @@ const Profile = ({ firstname, lastname, subjects }) => {
                             <p className="teacher__profile__subject__name">{subject.subjectName}</p>
                             <p className="teacher__profile__subject__name">{subject.description}</p>
                             {/* <Button className="teacher__profile__subject__btn" >Add Contents</Button> */}
+                            <Button variant="warning">Update</Button>
                             <Button className="teacher__profile__subject__btn" variant="danger" onClick={() => {deleteSubject(subject._id)}}>Delete</Button>
+                            
                         </div>)
                     )}
                 </div>

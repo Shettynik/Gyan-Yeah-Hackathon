@@ -5,7 +5,7 @@ import IconButton from '@material-ui/core/IconButton';
 import PhotoCamera from '@material-ui/icons/PhotoCamera';
 import { Link } from 'react-router-dom';
 import AccountCircleIcon from '@material-ui/icons/AccountCircle';
-import axios from 'axios';
+import axiosInstance from '../../../AxiosSetup';
 import CircularProgress from '@material-ui/core/CircularProgress';
 import Profile from './Profile/Profile';
 
@@ -24,7 +24,7 @@ const TeacherProfile = ({ history, match }) => {
     // }
 
     const getTeacherInfo = async (id) => {
-        axios.get(`http://localhost:5000/teacher/profile`, { withCredentials: true }).then((data) => {
+        axiosInstance.get(`teacher/profile`, { withCredentials: true }).then((data) => {
             setfirstname(data.data.firstname);
             setlastname(data.data.lastname);
             setsubjects(data.data.subjectsCreated);

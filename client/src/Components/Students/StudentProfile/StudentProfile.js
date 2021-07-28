@@ -2,13 +2,13 @@ import React, { useState, useEffect } from 'react';
 import './StudentProfile.css';
 import { Container, Navbar, Button, Nav, Form, FormControl } from 'react-bootstrap';
 import { Link } from 'react-router-dom';
-import axios from 'axios';
+import axiosInstance from '../../../AxiosSetup';
 
 const StudentProfile = ({ history, match }) => {
     const [teachers, setteachers] = useState([]);
 
     const getFollowedTeachers = () => {
-        axios.get('http://localhost:5000/channels/following')
+        axiosInstance.get('/channels/following')
             .then((data) => {
                 setteachers(data.data.teachersFollowed)
             })

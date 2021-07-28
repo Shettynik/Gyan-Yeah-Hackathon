@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
-import axios from 'axios';
 import { Container, Button, Alert } from 'react-bootstrap';
+import axiosInstance from '../../../AxiosSetup';
 
 const Channels = () => {
     const [channels, setchannels] = useState([]);
@@ -8,7 +8,7 @@ const Channels = () => {
     const [message, setmessage] = useState("");
 
     const getChannels = () => {
-        axios.get('http://localhost:5000/channels').then((data) => {
+        axiosInstance.get('/channels').then((data) => {
             console.log(data.data)
             setchannels(data.data)
             seterror("")
@@ -19,7 +19,7 @@ const Channels = () => {
     }
 
     const followHandler = (id) => {
-        axios.post(`http://localhost:5000/channels/follow/${id}`)
+        axiosInstance.post(`/channels/follow/${id}`)
         .then(() => {
             setmessage("Successfully followed");
             setTimeout(() => {

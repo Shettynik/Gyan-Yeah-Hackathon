@@ -3,11 +3,12 @@ import { Container, Navbar, Button, Nav } from 'react-bootstrap';
 import { Link } from 'react-router-dom';
 import axios from 'axios';
 import AccountCircleIcon from '@material-ui/icons/AccountCircle';
+import axiosInstance from '../../AxiosSetup';
 
 const NavigationBarTeacher = ({history, id}) => {
     const logoutHandler = (e) => {
         e.preventDefault()
-        axios.post("http://localhost:5000/auth/logout", {withCredentials: true}).then(() => {
+        axiosInstance.post("/auth/logout", {withCredentials: true}).then(() => {
             history.push("/login")
         }).catch((error) => {
             console.log(error)

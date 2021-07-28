@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import NavigationBarTeacher from '../../Header/NavigationBarTeacher';
 import './AddSubject.css';
-import axios from 'axios';
+import axiosInstance from '../../../AxiosSetup';
 import { TextField } from '@material-ui/core';
 import { Container, Button, Alert, Spinner } from 'react-bootstrap';
 import { Link, Redirect } from 'react-router-dom';
@@ -21,7 +21,7 @@ const AddSubject = ({ match, history }) => {
         console.log("ondrop", file)
         const form = new FormData();
         form.append("video", file);
-        axios.post(`http://localhost:5000/teacher/uploadVideo`, form)
+        axiosInstance.post(`/teacher/uploadVideo`, form)
             .then((data) => {
                 console.log(data.data);
                 setVideo(data.data);
@@ -42,7 +42,7 @@ const AddSubject = ({ match, history }) => {
     const addSubjectHandler = async (e) => {
         e.preventDefault();
         console.log(subjectName, description, video)
-        axios.post(`http://localhost:5000/teacher/addSubject`, { subjectName, description, video })
+        axiosInstance.post(`/teacher/addSubject`, { subjectName, description, video })
             .then((data) => {
                 setsubjectName("")
                 setdescription("")

@@ -2,14 +2,14 @@ import React,{useState, useEffect} from 'react';
 import { Navbar, Container, Nav, Button } from 'react-bootstrap';
 import { Link, Redirect } from 'react-router-dom';
 import AccountCircleIcon from '@material-ui/icons/AccountCircle';
-import axios from 'axios';
+import axiosInstance from '../../AxiosSetup';
 
 
 const NavigationBar = ({auth, type, setauth, settype}) => {
 
     const logoutHandler = (e) => {
         e.preventDefault()
-        axios.post("http://localhost:5000/auth/logout", { withCredentials: true }).then(() => {
+        axiosInstance.post("/auth/logout", { withCredentials: true }).then(() => {
             setauth(false)
             settype("")
         }).catch((error) => {

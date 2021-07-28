@@ -2,8 +2,8 @@ import React, { useEffect, useState } from 'react';
 import { TextField } from '@material-ui/core';
 import { Container, Navbar, Button, Alert } from 'react-bootstrap';
 import './Login.css';
-import axios from 'axios';
 import { Link } from 'react-router-dom';
+import axiosInstance from '../../../AxiosSetup';
 
 const Login = ({ history, match }) => {
     const [teacheremail, setteacherEmail] = useState("");
@@ -14,7 +14,7 @@ const Login = ({ history, match }) => {
 
     const studentLogin = async (e) => {
         e.preventDefault();
-        axios.post("http://localhost:5000/auth/login/Student", { email: studentemail, password: studentpassword }, { withCredentials: true }, {
+        axiosInstance.post("/auth/login/Student", { email: studentemail, password: studentpassword }, { withCredentials: true }, {
             'Content-Type': 'application/json',
         }).then(() => {
             history.push('/student/profile')
@@ -31,7 +31,7 @@ const Login = ({ history, match }) => {
 
     const teacherLogin = async (e) => {
         e.preventDefault()
-        axios.post("http://localhost:5000/auth/login/Teacher", { email: teacheremail, password: teacherpassword }, { withCredentials: true }, {
+        axiosInstance.post("/auth/login/Teacher", { email: teacheremail, password: teacherpassword }, { withCredentials: true }, {
             'Content-Type': 'application/json',
         }).then(() => {
             history.push("/teacher/profile")

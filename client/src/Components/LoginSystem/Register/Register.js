@@ -3,7 +3,7 @@ import { TextField } from '@material-ui/core';
 import { Container, Navbar, Button, Alert } from 'react-bootstrap';
 import { Link } from 'react-router-dom';
 import './Register.css';
-import axios from 'axios';
+import axiosInstance from '../../../AxiosSetup';
 
 const Register = ({history, match}) => {
     const [firstname, setfirstname] = useState("");
@@ -16,7 +16,7 @@ const Register = ({history, match}) => {
     const registerSubmit = async (e) => {
         
         e.preventDefault()
-        axios.post(`http://localhost:5000/auth/register/${match.params.userType}`, {firstname, lastname, email, password},{ withCredentials: true },{
+        axiosInstance.post(`/auth/register/${match.params.userType}`, {firstname, lastname, email, password},{ withCredentials: true },{
             'Content-Type': 'application/json',
         }).then((data) => {
             console.log(data)
